@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "layout2svg"
-version = "0.1.5"
+version = "0.1.6"
 description = "A package to convert IC layouts (GDS2 and OASIS) to SVG."
 authors = ["dasdias <das.dias6@gmail.com>"]
 repository = "https://github.com/das-dias/layout2svg"
