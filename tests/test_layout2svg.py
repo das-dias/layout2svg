@@ -10,7 +10,7 @@ from layout2svg.layout2svg import load_layout, load_layerstack, render_to_svg
 from layout2svg.data import LayerStack
 
 def test_version():
-    assert __version__ == '0.1.0'
+    assert __version__ == '0.1.6'
 
 
 def test_load_layout():
