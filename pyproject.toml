@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "layout2svg"
-version = "0.1.4"
+version = "0.1.5"
 description = "A package to convert IC layouts (GDS2 and OASIS) to SVG."
 authors = ["dasdias <das.dias6@gmail.com>"]
 repository = "https://github.com/das-dias/layout2svg"
@@ -24,7 +24,7 @@ pytest-cov = "^4.1.0"
 black = "^23.7.0"
 
 [tool.poetry.scripts]
-layout2svg = "bin.layout2svg:main"
+layout2svg = "layout2svg.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
