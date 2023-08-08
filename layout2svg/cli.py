@@ -3,21 +3,19 @@
 """layout2svg command line tool.
 
 Usage:
-    layout2svg -i <input> -t <layerstack> [-c <top_cell>] -o --output <output> [--verbose] [--inkscape] [--log <log>]
-    layout2svg -i <input> -t <layerstack> [-c <top_cell>] [--verbose] --inkscape [--log <log>]
+    layout2svg -i INPUT_FILE -t LAYER_FILE [-c TOP_CELL_NAME] [-o OUT_FILE] [--verbose] [--inkscape]
     layout2svg -h | --help
     layout2svg --version
 
 Options:
-    -h --help     Show this help message and exit.
-    --version     Show version information.
-    --verbose     Enable verbose debug output.
-    --inkscape    Use inkscape to render SVG.
-    -i --input    Input [.gds] | [.oas] layout file.
-    -t            Layerstack [.lys.yml] file.
-    -c --top-cell Top cell name. If not specified, the largest area cell is used.
-    -o --output   Output [.svg] file.
-    --log         Log file.
+    -h --help                   Show this help message and exit.
+    --version                   Show version information.
+    --verbose                   Enable verbose debug output.
+    --inkscape                  Use inkscape to render SVG.
+    -i --input INPUT_FILE       Input [.gds] | [.oas] layout file.
+    -t LAYER_FILE               Layerstack [.lys.yml] file.
+    -c --top-cell TOP_CELL_NAME Top cell name. If not specified, the largest area cell is used.
+    -o --output OUT_FILE        Output [.svg] file.
 Description:
     layout2svg is a tool to convert GDS or OAS layout files to SVG. 
     Optional direct rendering to Inkscape is supported.
@@ -62,59 +60,61 @@ except subprocess.CalledProcessError as e:
 def main():
     # Configure the logger to write to a file
     logger.add("layout2svg.log", rotation="1 week")  # Change the log file name and rotation settings as needed
-    args = docopt(__doc__, version="layout2svg 1.0")
+    args = docopt(__doc__, version="layout2svg 0.1.5")
     verbose = args["--verbose"]
     render_to_inkscape = args["--inkscape"] and (INKSCAPE_BIN != "")
-    render_to_svg = args.get("-o") or args.get("--output")
+    render_to_outfile = args["--output"]
+    in_file = args["--input"]
+    layerstack_file = args["-t"]
+    out_file = args["--output"]
+    try:
+        assert render_to_outfile or render_to_inkscape, "No output specified."
+    except AssertionError as e:
+        sys.exit("Failed: No output specified.")
     
     try: 
         # import layout
-        layerstack = load_layerstack(args["-t"])
+        layerstack = load_layerstack(layerstack_file)
         # import layerstack to generate svg layer info
-        layout = load_layout(args["-i"])
+        layout = load_layout(in_file)
     except Exception as e:
         if verbose:
             logger.error("Could not load layout or layerstack: ")
             logger.exception(e)
         sys.exit("Failed: Could not load input files.")
     
-    topcell_name = args.get("-c") or args.get("--top-cell")
-    if render_to_svg:
+    topcell_name = args["--top-cell"]
+    if render_to_outfile:
         try:
-            render_to_svg(layout, layerstack, topcell=topcell_name, o=args["-o"])
+            render_to_svg(layout, layerstack, topcell=topcell_name, out=out_file)
         except Exception as e:
             if verbose:
-                logger.error("Could not render to SVG: ", e)
+                logger.error(f"Could not render to SVG: {e}")
             sys.exit("Failed: Could not render to output file.")
         if verbose:
-            logger.success("Rendered to SVG: ", args["-o"])
+            logger.success("Rendered to SVG: ", out_file)
     if render_to_inkscape:
-        print("Inkscape binary found at: ", INKSCAPE_BIN)
-        cmd = [INKSCAPE_BIN, "--pipe"]
-        try:
-            with tempfile.NamedTemporaryFile(suffix=".svg") as f:
-                try:
-                    render_to_svg(layout, layerstack, topcell=topcell_name, out=f.name)
-                except Exception as e:
-                    if verbose:
-                        logger.error("Could not render to temporary file: ")
-                        logger.exception(e)
-                    sys.exit("Failed: Could not render to Inkscape.")
-                try:
-                    cmd.append(f.name)
-                    subprocess.run(cmd)
-                except subprocess.CalledProcessError as e:
-                    if verbose:
-                        logger.error("Subprocess system call failed: ")
-                        logger.exception(e)
-                    sys.exit("Failed: Could not render to Inkscape.")
-        except OSError as e:
+        cmd = [INKSCAPE_BIN, "--pipe", "-g"]
+        with tempfile.NamedTemporaryFile(suffix=".svg") as f:
+            try:
+                render_to_svg(layout, layerstack, topcell=topcell_name, out=f.name)
+            except Exception as e:
+                if verbose:
+                    logger.error("Could not render to temporary file: ")
+                    logger.exception(e)
+                sys.exit("Failed: Could not render to Inkscape.")
+            try:
+                cmd.append(f.name)
+                subprocess.run(cmd)
+            except subprocess.CalledProcessError as e:
+                if verbose:
+                    logger.error("Subprocess system call failed: ")
+                    logger.exception(e)
+                sys.exit("Failed: Could not render to Inkscape.")
             if verbose:
-                logger.error("Could not create temporary file: ")
-                logger.exception(e)
-            sys.exit("Failed: Could not render to Inkscape.")
-        if verbose:
-            logger.success("Inkscape run: ", cmd.join(" "))
+                cmds = " ".join(cmd)
+                logger.success(f"Inkscape run: {cmds}")
+        
     logger.success("Done.")
     
 if __name__ == "__main__":

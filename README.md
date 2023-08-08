@@ -37,5 +37,4 @@ can generate the following SVG image:
 
 <img src="tests/data/crossed_metal.png" width=400/>
 
-
 </p>

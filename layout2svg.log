@@ -1,0 +1,185 @@
+2023-08-08 12:59:03.081 | ERROR    | layout2svg.cli:main:77 - Could not load layout or layerstack: 
+2023-08-08 12:59:03.082 | ERROR    | layout2svg.cli:main:78 - expected str, bytes or os.PathLike object, not bool
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+> File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/cli.py", line 72, in main
+    layerstack = load_layerstack(args["-t"])
+                 │               └ {'--help': False,
+                 │                  '--inkscape': True,
+                 │                  '--input': True,
+                 │                  '--log': False,
+                 │                  '--output': 0,
+                 │                  '--top-cell': None,
+                 │                  '--verbose': ...
+                 └ <function load_layerstack at 0x7f93a8321160>
+
+  File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/layout2svg.py", line 56, in load_layerstack
+    fp = str(Path(fp).resolve())
+             │    └ True
+             └ <class 'pathlib.Path'>
+
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 1082, in __new__
+    self = cls._from_parts(args, init=False)
+           │   │           └ (True,)
+           │   └ <classmethod object at 0x7f93a827fdc0>
+           └ <class 'pathlib.PosixPath'>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 707, in _from_parts
+    drv, root, parts = self._parse_args(args)
+                       │    │           └ (True,)
+                       │    └ <classmethod object at 0x7f93a827f460>
+                       └ <unprintable PosixPath object>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 691, in _parse_args
+    a = os.fspath(a)
+        │  │      └ True
+        │  └ <built-in function fspath>
+        └ <module 'os' from '/opt/anaconda3/lib/python3.9/os.py'>
+
+TypeError: expected str, bytes or os.PathLike object, not bool
+2023-08-08 13:04:05.426 | ERROR    | layout2svg.cli:main:77 - Could not load layout or layerstack: 
+2023-08-08 13:04:05.427 | ERROR    | layout2svg.cli:main:78 - expected str, bytes or os.PathLike object, not bool
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+> File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/cli.py", line 72, in main
+    layerstack = load_layerstack(layerstack_file)
+                 │               └ True
+                 └ <function load_layerstack at 0x7fd880320160>
+
+  File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/layout2svg.py", line 56, in load_layerstack
+    fp = str(Path(fp).resolve())
+             │    └ True
+             └ <class 'pathlib.Path'>
+
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 1082, in __new__
+    self = cls._from_parts(args, init=False)
+           │   │           └ (True,)
+           │   └ <classmethod object at 0x7fd8902f7dc0>
+           └ <class 'pathlib.PosixPath'>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 707, in _from_parts
+    drv, root, parts = self._parse_args(args)
+                       │    │           └ (True,)
+                       │    └ <classmethod object at 0x7fd8902f7460>
+                       └ <unprintable PosixPath object>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 691, in _parse_args
+    a = os.fspath(a)
+        │  │      └ True
+        │  └ <built-in function fspath>
+        └ <module 'os' from '/opt/anaconda3/lib/python3.9/os.py'>
+
+TypeError: expected str, bytes or os.PathLike object, not bool
+2023-08-08 13:05:04.477 | ERROR    | layout2svg.cli:main:78 - Could not load layout or layerstack: 
+2023-08-08 13:05:04.478 | ERROR    | layout2svg.cli:main:79 - expected str, bytes or os.PathLike object, not bool
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+> File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/cli.py", line 73, in main
+    layerstack = load_layerstack(layerstack_file)
+                 │               └ True
+                 └ <function load_layerstack at 0x7f89d02b8160>
+
+  File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/layout2svg.py", line 56, in load_layerstack
+    fp = str(Path(fp).resolve())
+             │    └ True
+             └ <class 'pathlib.Path'>
+
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 1082, in __new__
+    self = cls._from_parts(args, init=False)
+           │   │           └ (True,)
+           │   └ <classmethod object at 0x7f89d0067dc0>
+           └ <class 'pathlib.PosixPath'>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 707, in _from_parts
+    drv, root, parts = self._parse_args(args)
+                       │    │           └ (True,)
+                       │    └ <classmethod object at 0x7f89d0067460>
+                       └ <unprintable PosixPath object>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 691, in _parse_args
+    a = os.fspath(a)
+        │  │      └ True
+        │  └ <built-in function fspath>
+        └ <module 'os' from '/opt/anaconda3/lib/python3.9/os.py'>
+
+TypeError: expected str, bytes or os.PathLike object, not bool
+2023-08-08 13:09:57.555 | ERROR    | layout2svg.cli:main:78 - Could not load layout or layerstack: 
+2023-08-08 13:09:57.556 | ERROR    | layout2svg.cli:main:79 - expected str, bytes or os.PathLike object, not bool
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+> File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/cli.py", line 73, in main
+    layerstack = load_layerstack(layerstack_file)
+                 │               └ True
+                 └ <function load_layerstack at 0x7fbc98210160>
+
+  File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/layout2svg.py", line 56, in load_layerstack
+    fp = str(Path(fp).resolve())
+             │    └ True
+             └ <class 'pathlib.Path'>
+
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 1082, in __new__
+    self = cls._from_parts(args, init=False)
+           │   │           └ (True,)
+           │   └ <classmethod object at 0x7fbca817fdc0>
+           └ <class 'pathlib.PosixPath'>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 707, in _from_parts
+    drv, root, parts = self._parse_args(args)
+                       │    │           └ (True,)
+                       │    └ <classmethod object at 0x7fbca817f460>
+                       └ <unprintable PosixPath object>
+  File "/opt/anaconda3/lib/python3.9/pathlib.py", line 691, in _parse_args
+    a = os.fspath(a)
+        │  │      └ True
+        │  └ <built-in function fspath>
+        └ <module 'os' from '/opt/anaconda3/lib/python3.9/os.py'>
+
+TypeError: expected str, bytes or os.PathLike object, not bool
+2023-08-08 13:25:41.553 | ERROR    | layout2svg.cli:main:102 - Could not render to temporary file: 
+2023-08-08 13:25:41.554 | ERROR    | layout2svg.cli:main:103 - 'NoneType' object is not callable
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+> File "/Users/dasdias/Documents/SoftwareProjects/redsxl/layout2svg/layout2svg/cli.py", line 99, in main
+    render_to_svg(layout, layerstack, topcell=topcell_name, out=f.name)
+    │             │       │                   │                 │ └ '/var/folders/vv/xctyh4bd2td6k2w_gvh_t2vr0000gn/T/tmpxet_fx9y.svg'
+    │             │       │                   │                 └ <tempfile._TemporaryFileWrapper object at 0x7fb00845f5e0>
+    │             │       │                   └ None
+    │             │       └ LayerStack({(2, 0): Layer((2, 0)), (2, 1): Layer((2, 1)), (3, 0): Layer((3, 0))})
+    │             └ <gdstk.Library object at 0x7fb0084385d0>
+    └ None
+
+TypeError: 'NoneType' object is not callable
+2023-08-08 13:28:14.698 | SUCCESS  | layout2svg.cli:main:119 - Inkscape run: 
+2023-08-08 13:28:14.699 | SUCCESS  | layout2svg.cli:main:120 - Done.
+2023-08-08 13:29:32.587 | SUCCESS  | layout2svg.cli:main:118 - Inkscape run: 
+2023-08-08 13:29:32.588 | SUCCESS  | layout2svg.cli:main:119 - Done.
+2023-08-08 13:31:09.628 | SUCCESS  | layout2svg.cli:main:119 - Inkscape run: 
+2023-08-08 13:31:09.629 | SUCCESS  | layout2svg.cli:main:120 - Done.
+2023-08-08 13:36:19.085 | ERROR    | layout2svg.cli:main:87 - Could not render to SVG: 
+2023-08-08 13:36:53.330 | ERROR    | layout2svg.cli:main:87 - Could not render to SVG: 
+2023-08-08 13:37:09.010 | ERROR    | layout2svg.cli:main:87 - Could not render to SVG: 
+2023-08-08 13:38:08.858 | ERROR    | layout2svg.cli:main:88 - Could not render to SVG: 
+2023-08-08 13:38:42.734 | SUCCESS  | layout2svg.cli:main:90 - Rendered to SVG: 
+2023-08-08 13:38:43.034 | SUCCESS  | layout2svg.cli:main:110 - Inkscape run: 
+2023-08-08 13:38:43.034 | SUCCESS  | layout2svg.cli:main:111 - Done.
+2023-08-08 13:40:03.047 | SUCCESS  | layout2svg.cli:main:90 - Rendered to SVG: 
+2023-08-08 13:40:03.441 | SUCCESS  | layout2svg.cli:main:111 - Inkscape run: /opt/homebrew/bin/inkscape --pipe ./tests/data/crossed_metal_cli.svg
+2023-08-08 13:40:03.441 | SUCCESS  | layout2svg.cli:main:112 - Done.
+2023-08-08 13:43:34.360 | SUCCESS  | layout2svg.cli:main:90 - Rendered to SVG: 
+2023-08-08 13:43:39.750 | SUCCESS  | layout2svg.cli:main:111 - Inkscape run: /opt/homebrew/bin/inkscape --pipe -g ./tests/data/crossed_metal_cli.svg
+2023-08-08 13:43:39.751 | SUCCESS  | layout2svg.cli:main:112 - Done.
+2023-08-08 13:45:15.557 | SUCCESS  | layout2svg.cli:main:91 - Rendered to SVG: 
+2023-08-08 13:45:20.367 | SUCCESS  | layout2svg.cli:main:112 - Inkscape run: /opt/homebrew/bin/inkscape --pipe -g /tmp/tmpesepj3gj.svg
+2023-08-08 13:45:20.368 | SUCCESS  | layout2svg.cli:main:113 - Done.
+2023-08-08 13:46:17.716 | SUCCESS  | layout2svg.cli:main:112 - Inkscape run: /opt/homebrew/bin/inkscape --pipe -g /tmp/tmpvq2mxaoe.svg
+2023-08-08 13:46:17.718 | SUCCESS  | layout2svg.cli:main:114 - Done.
+2023-08-08 13:46:21.815 | SUCCESS  | layout2svg.cli:main:114 - Done.
+2023-08-08 13:47:19.344 | SUCCESS  | layout2svg.cli:main:116 - Done.
+2023-08-08 13:48:50.511 | SUCCESS  | layout2svg.cli:main:116 - Inkscape run: /opt/homebrew/bin/inkscape --pipe -g /tmp/tmpeeyjga9i.svg
+2023-08-08 13:48:50.512 | SUCCESS  | layout2svg.cli:main:118 - Done.
+2023-08-08 13:48:56.763 | SUCCESS  | layout2svg.cli:main:95 - Rendered to SVG: 
+2023-08-08 13:49:02.359 | SUCCESS  | layout2svg.cli:main:116 - Inkscape run: /opt/homebrew/bin/inkscape --pipe -g /tmp/tmpbcdl3egv.svg
+2023-08-08 13:49:02.359 | SUCCESS  | layout2svg.cli:main:118 - Done.
