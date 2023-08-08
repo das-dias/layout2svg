@@ -24,9 +24,13 @@ layers:
     metadata:       # visualization-specific properties
       type: routing
       keys: [Metal1, M1] # key identifiers of the layer
+      # rgb will be used as fill and edge color by default
+      rgba: [0, 191, 255, 180] # RGBA color
+      text: '\\' # texture
+# possible textures: '' '\\' '/\' '_|' '//' '..'
     properties:     # Technology-specific properties
       ly    : 2     # layer id integer
-      dy    : 0     # datatype id integer
+      dt    : 0     # datatype id integer
       zh    : 1.3761   # Z-height of the layer (in micrometers)
       th    : 0.3600   # Thickness of the layer (in micrometers)
       mw    : 0.1400  # minimum width of a metal in this layer
@@ -39,6 +43,8 @@ layers:
     metadata:
       type: cut
       keys: [Via, M1M2Via, ViaM2M1]
+      rgba: [0, 190, 0, 180]
+      text: '..'
     properties:
       top   : met2
       bot   : met1 # bot and top used for finding the z-height and thickness of the via!
@@ -54,9 +60,11 @@ layers:
     metadata:       
       type: routing
       keys: [Metal2, M2]
+      rgba: [255, 190, 0, 180]
+      text: '_|'
     properties:     
       ly    : 3     
-      dy    : 0     
+      dt    : 0     
       zh    : 2.0061 
       th    : 0.3600   
       mw    : 0.1400  

@@ -3,8 +3,8 @@
 """layout2svg command line tool.
 
 Usage:
-    layout2svg -i <input> -t <layerstack> -o --output <output> [--verbose] [--inkscape] [--log <log>]
-    layout2svg -i <input> -t <layerstack> [--verbose] --inkscape [--log <log>]
+    layout2svg -i <input> -t <layerstack> [-c <top_cell>] -o --output <output> [--verbose] [--inkscape] [--log <log>]
+    layout2svg -i <input> -t <layerstack> [-c <top_cell>] [--verbose] --inkscape [--log <log>]
     layout2svg -h | --help
     layout2svg --version
 
@@ -15,6 +15,7 @@ Options:
     --inkscape    Use inkscape to render SVG.
     -i --input    Input [.gds] | [.oas] layout file.
     -t            Layerstack [.lys.yml] file.
+    -c --top-cell Top cell name. If not specified, the largest area cell is used.
     -o --output   Output [.svg] file.
     --log         Log file.
 Description:
@@ -23,7 +24,7 @@ Description:
 """
 
 
-#from layout2svg import load_layerstack, load_layout, render_to_svg
+from layout2svg import load_layerstack, load_layout, render_to_svg
 import platform
 import sys
 import tempfile
@@ -65,14 +66,22 @@ if __name__ == "__main__":
     verbose = args["--verbose"]
     render_to_inkscape = args["--inkscape"] and (INKSCAPE_BIN != "")
     render_to_svg = args.get("-o") or args.get("--output")
-    # import layout
-    layerstack = load_layerstack(args["-t"])
-    # import layerstack to generate svg layer info
-    layout = load_layout(args["-i"])
-
+    
+    try: 
+        # import layout
+        layerstack = load_layerstack(args["-t"])
+        # import layerstack to generate svg layer info
+        layout = load_layout(args["-i"])
+    except Exception as e:
+        if verbose:
+            logger.error("Could not load layout or layerstack: ")
+            logger.exception(e)
+        sys.exit("Failed: Could not load input files.")
+    
+    topcell_name = args.get("-c") or args.get("--top-cell")
     if render_to_svg:
-        try: 
-            render_to_svg(layout, layerstack, args["-o"])
+        try:
+            render_to_svg(layout, layerstack, topcell=topcell_name, o=args["-o"])
         except Exception as e:
             if verbose:
                 logger.error("Could not render to SVG: ", e)
@@ -85,7 +94,7 @@ if __name__ == "__main__":
         try:
             with tempfile.NamedTemporaryFile(suffix=".svg") as f:
                 try:
-                    render_to_svg(layout, layerstack, f.name)
+                    render_to_svg(layout, layerstack, topcell=topcell_name, out=f.name)
                 except Exception as e:
                     if verbose:
                         logger.error("Could not render to temporary file: ")
