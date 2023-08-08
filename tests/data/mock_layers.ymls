@@ -56,7 +56,7 @@ layers:
       thc2  : -1.90e-7 # second temperature coefficient THC2
       dc_avgcd : 0.2900 # mA per via - note that it is not mA / um, once the vias has a fixed width!
 
-  metal2:
+  met2:
     metadata:       
       type: routing
       keys: [Metal2, M2]

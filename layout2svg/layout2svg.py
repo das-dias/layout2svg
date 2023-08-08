@@ -129,7 +129,9 @@ def render_to_svg(
     Returns:
         etree.ElementTree: SVG XML file rendered from the layout.
     """
-
+    if out:
+        assert Path(out).suffix == ".svg", "Output file must be an SVG file."
+    
     # check if topcell exists
     tcell = max(layout.cells, key=lambda cell: cell.area())
     if topcell not in [cell.name for cell in layout.cells]:
