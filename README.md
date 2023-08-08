@@ -15,7 +15,7 @@ pip install layout2svg
 <h2 align=center> Usage - Command Line Interface </h2>
 
 ```bash
-layout2svg -i <input_file_path [.gds/.oas]> -o <output_file_path [.svg]>
+layout2svg -i <input_file_path [.gds/.oas]> -o <output_file_path [.svg]> -t <layerstack_file_path [.ymls]>
 ```
 
 <h2 align=center> Examples </h2>
@@ -25,7 +25,7 @@ Running the example with the mock layerstack file and layout provided in the <a 
 </p>
 
 ```bash
-layout2svg -i examples/crossed_metal.gds -t examples/mock_layers.lys.yml -o examples/crossed_metal.svg
+layout2svg -i ./tests/data/crossed_metal.gds -t ./tests/data/mock_layers.ymls -o ./tests/data/crossed_metal.svg
 ```
 
 <p>
