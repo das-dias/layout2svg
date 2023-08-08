@@ -28,7 +28,7 @@ def load_layout(fp: str) -> Optional[gdstk.Library]:
     ext = Path(fp).suffix
 
     assert Path(fp).exists(), f"File {fp} does not exist."
-    
+
     lib = None
     if ext in _LAYOUT_FILE_EXTENSIONS[:2]:
         # load OASIS file
@@ -54,9 +54,9 @@ def load_layerstack(fp: str) -> LayerStack:
         The layerstack.
     """
     fp = str(Path(fp).resolve())
-    
+
     assert Path(fp).exists(), f"File {fp} does not exist."
-    
+
     ext = Path(fp).suffix
     if ext not in _LAYERSTACK_FILE_EXTENSIONS:
         raise ValueError(
@@ -70,7 +70,7 @@ def load_layerstack(fp: str) -> LayerStack:
             layerstack_yaml = yaml.safe_load(f)
     except Exception as e:
         raise ValueError(f"Could not load layerstack from {fp}.") from e
-    
+
     # convert layerstack to LayerStack object
     if not layerstack_yaml.get("layers"):
         raise ValueError("Layerstack is missing layers.")
@@ -79,7 +79,6 @@ def load_layerstack(fp: str) -> LayerStack:
         material = None
         properties = None
         metadata = None
-        print(layer)
         if layer.get("metadata"):
             material = Material(
                 rgba=layer["metadata"].get("rgba"), text=layer["metadata"].get("text")
@@ -100,13 +99,13 @@ def load_layerstack(fp: str) -> LayerStack:
             )
         properties = LayerProperties(
             ly=layer["properties"].get("ly"),
-            dt=layer["properties"].get("dy"),
+            dt=layer["properties"].get("dt"),
         )
         lydt = (properties.ly, properties.dt)
         layerstack[lydt] = Layer(
             name=layerkey, lydt=lydt, metadata=metadata, properties=properties
         )
-    
+
     return LayerStack(layerstack)
 
 
@@ -144,15 +143,11 @@ def render_to_svg(
     )
     # create SVG xml tree
     kwargs = {
-        "width": width_points,
-        "height": length_points,
-        "version": 1.0,
+        "width": "width_points",
+        "height": "length_points",
+        "viewBox": f"{pbot[0]} {pbot[1]} {ptop[0]} {ptop[1]}",
+        "version": "1.0",
         "xmlns": "http://www.w3.org/2000/svg",
-        "xmlns:dc": "http://purl.org/dc/elements/1.1/",
-        "xmlns:cc": "http://creativecommons.org/ns#",
-        "xmlns:rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-        "xmlns:svg": "http://www.w3.org/2000/svg",
-        "xmlns:xlink": "http://www.w3.org/1999/xlink",
         "id": f"{tcell.name}",
         "renderedby": "layout2svg",
     }
@@ -172,7 +167,7 @@ def render_to_svg(
                     mat.hex,  # fill as 6-digit hex
                     mat.rgba[-1] / 255,  # opacity as alpha channel between 0 and 1
                 )
-
+            cmap[(layer, datatype)] = layer_cmap
     # render polygons to SVG surface
     for layer, datatype in layerstack.layers.keys():
         layer_polys = tcell.get_polygons(layer=layer, datatype=datatype)
@@ -182,19 +177,18 @@ def render_to_svg(
             # build an SVG polygon at the corresponding layer
             # add the polygon to the SVG surface
             vertices = poly.points
-            str_vertices = "m "
-            str_vertices += [
-                f"{vertex[0]},{vertex[1]}" for vertex in vertices[1:]
-            ].join(" ")
-            str_vertices += " z"
+            str_vertices = " ".join(
+                [f"{vertex[0]},{vertex[1]}" for vertex in vertices[1:]]
+                + [f"{vertices[0][0]},{vertices[0][1]}"]
+            )
             fill = cmap[(layer, datatype)][id][0]
             opacity = cmap[(layer, datatype)][id][1]
             style = f"fill:{fill};fill-opacity:{opacity}"
             etree.SubElement(
                 layer_group,
-                "path",
+                "polygon",
                 id=f"{layer},{datatype},{id}",
-                d=str_vertices,
+                points=str_vertices,
                 style=style,
             )
     # render labels to SVG surface
@@ -217,6 +211,9 @@ def render_to_svg(
     if out:
         svg_canvas = etree.ElementTree(tree)
         svg_canvas.write(
-            Path(out).resolve(), pretty_print=True, version=1.0, standalone="no", encoding="UTF-8"
+            str(Path(out).resolve()),
+            pretty_print=True,
+            standalone="no",
+            encoding="UTF-8",
         )
     return tree

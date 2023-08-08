@@ -10,12 +10,7 @@ from typing import Tuple, Union, Optional, List, Dict
 class Material:
     text: str  # material texture
     rgba: List[int]
-    
-    @property
-    def rgba(self):
-        return tuple(self.rgba)
 
-    
     @property
     def rgb(self):
         return tuple(self.rgba[:3])
@@ -39,34 +34,24 @@ class LayerMetadata:
 @dataclass
 class LayerProperties:
     ly: float
-    dy: float
+    dt: float
     # Non necessary properties for this tool:
-    zh: float
-    th: float
-    mw: float
-    sqrres: float
-    dc_avgcd: float
-    ac_rmscd: float
-    sqrcap: float
+    zh: Optional[float] = None
+    th: Optional[float] = None
+    mw: Optional[float] = None
+    sqrres: Optional[float] = None
+    dc_avgcd: Optional[float] = None
+    ac_rmscd: Optional[float] = None
+    sqrcap: Optional[float] = None
 
 
+@dataclass
 class Layer:
     name: str  # layer name
     lydt: Tuple[int, int]
     metadata: Optional[LayerMetadata]
     properties: Optional[LayerProperties]
 
-    def __init__(
-        self,
-        lydt: Tuple[int, int],
-        metadata: Optional[LayerMetadata] = None,
-        properties: Optional[LayerProperties] = None,
-    ):
-        self.lydt = lydt
-        self.metadata = metadata
-        self.properties = properties
-
-    @property
     def __getitem__(self, index):
         return self.lydt[index]
 

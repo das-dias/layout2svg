@@ -1,8 +1,12 @@
 [tool.poetry]
 name = "layout2svg"
-version = "0.1.0"
-description = ""
+version = "0.1.4"
+description = "A package to convert IC layouts (GDS2 and OASIS) to SVG."
 authors = ["dasdias <das.dias6@gmail.com>"]
+repository = "https://github.com/das-dias/layout2svg"
+readme = "README.md"
+license = "GPLv2"
+keywords = ["layout", "svg", "gds2", "oasis"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -20,9 +24,20 @@ pytest-cov = "^4.1.0"
 black = "^23.7.0"
 
 [tool.poetry.scripts]
-layout2svg = "bin/layout2svg"
-
+layout2svg = "bin.layout2svg:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.autohooks]
+mode = "pipenv"
+pre-commit = ["autohooks.plugins.black"]
+
+[tool.autohooks.plugins.black]
+arguments = ["--fast"]
+
+# convertion from pyproject to setup.py
+[tool.dephell.main]
+from={fromat="poetry", path="pyproject.toml"}
+to={format="setuppy", path="setup.py"}

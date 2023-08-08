@@ -24,7 +24,7 @@ Description:
 """
 
 
-from layout2svg import load_layerstack, load_layout, render_to_svg
+from layout2svg.layout2svg import load_layerstack, load_layout, render_to_svg
 import platform
 import sys
 import tempfile
@@ -59,7 +59,7 @@ except subprocess.CalledProcessError as e:
     print("Error: Could not find inkscape binary.", e)
     exit(1)
 
-if __name__ == "__main__":
+def main():
     # Configure the logger to write to a file
     logger.add("layout2svg.log", rotation="1 week")  # Change the log file name and rotation settings as needed
     args = docopt(__doc__, version="layout2svg 1.0")
@@ -116,3 +116,6 @@ if __name__ == "__main__":
         if verbose:
             logger.success("Inkscape run: ", cmd.join(" "))
     logger.success("Done.")
+    
+if __name__ == "__main__":
+    main()

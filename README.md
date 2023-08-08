@@ -21,7 +21,7 @@ layout2svg -i <input_file_path [.gds/.oas]> -o <output_file_path [.svg]>
 <h2 align=center> Examples </h2>
 
 <p>
-Running the example with the mock layerstack file and layout provided in the <a href="./examples">examples</a> directory, by running the following command:
+Running the example with the mock layerstack file and layout provided in the <a href="tests/data/">examples</a>, by running the following command:
 </p>
 
 ```bash
@@ -33,5 +33,9 @@ can generate the following SVG image:
 </p>
 
 <p align=center>
-<img src="./examples/crossed_metal.svg" width="400" height="400">
+
+
+<img src="tests/data/crossed_metal.png" width=400/>
+
+
 </p>
